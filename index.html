@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Inventario de Cajones - GAB</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>📦 Sistema de Inventario de Cajones</h1>
+                <div class="user-info">
+                    <span id="current-user">Bienvenido</span>
+                    <button onclick="logout()" class="btn-secondary">Cerrar Sesión</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Login Screen -->
+        <div id="login-screen" class="login-container">
+            <div class="login-box">
+                <h2>🔐 Iniciar Sesión</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Usuario</label>
+                        <select id="login-user" required>
+                            <option value="">Selecciona tu nombre</option>
+                            <option value="Carmen">Carmen (Brocoli - Aguilares)</option>
+                            <option value="Jorge">Jorge Alberto (Campo Aguilares)</option>
+                            <option value="Guadalupe">Guadalupe Segura (Castillo)</option>
+                            <option value="Alejandro">Alejandro Soto (Transporte Pato)</option>
+                            <option value="Jose_Gomez">José Gómez (Zona Norte)</option>
+                            <option value="Rene">René (Plataformas GAB)</option>
+                            <option value="Adolfo">Adolfo (Doña Rosa/San Javier)</option>
+                            <option value="Jose_Manuel">José Manuel Jiménez (Marquesado)</option>
+                            <option value="Rafa">Rafa (Buena Vista/María Isabel)</option>
+                            <option value="Daniel">Daniel (Covemex)</option>
+                            <option value="Tavo">Tavo (Báscula Comercializadora)</option>
+                            <option value="Ivan">Ivan (Administrador)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Ingresar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="main-app" style="display: none;">
+            <!-- Navigation Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('capture')">📝 Captura</button>
+                <button class="tab" onclick="showTab('dashboard')">📊 Dashboard</button>
+                <button class="tab" onclick="showTab('history')">📅 Historial</button>
+                <button class="tab" onclick="showTab('export')">💾 Exportar</button>
+            </div>
+
+            <!-- Capture Tab -->
+            <div id="capture-tab" class="tab-content active">
+                <div class="capture-container">
+                    <h2>Captura de Inventario</h2>
+                    <div class="date-selector">
+                        <label>Fecha:</label>
+                        <input type="date" id="capture-date" required>
+                    </div>
+
+                    <form id="capture-form">
+                        <div class="location-selector">
+                            <label>Ubicación:</label>
+                            <select id="location" required onchange="updateLocationFields()">
+                                <option value="">Selecciona ubicación...</option>
+                                <!-- Zona Aguilares -->
+                                <optgroup label="Zona Aguilares">
+                                    <option value="Patio Aguilares">Patio Aguilares</option>
+                                    <option value="Campo Aguilares">Campo Aguilares</option>
+                                    <option value="San Isidro">San Isidro (Rosalio García)</option>
+                                    <option value="Pozo Alto 2">Pozo Alto 2 (Rosalio García)</option>
+                                    <option value="Sofia">Rancho Sofia</option>
+                                    <option value="Santa Teresa">Santa Teresa</option>
+                                </optgroup>
+                                <!-- Zona Querétaro -->
+                                <optgroup label="Zona Querétaro">
+                                    <option value="Castillo">Castillo</option>
+                                    <option value="San Cristobal 6">San Cristóbal 6</option>
+                                </optgroup>
+                                <!-- Zona Irapuato -->
+                                <optgroup label="Zona Irapuato">
+                                    <option value="Comercializadora">Comercializadora</option>
+                                    <option value="Buena Vista">Buena Vista</option>
+                                    <option value="María Isabel Alatorre">María Isabel Alatorre</option>
+                                    <option value="Marquesado Guadalupe Rafa">Marquesado Guadalupe (Rafa)</option>
+                                    <option value="Marquesado Guadalupe Juan">Marquesado Guadalupe (Juan Manuel)</option>
+                                    <option value="Capilla Guadalupe">Rancho La Capilla</option>
+                                    <option value="Agrícola Nieto">Agrícola Nieto</option>
+                                    <option value="Agustín Sañudo">Agustín Sañudo</option>
+                                    <option value="Doña Rosa">Doña Rosa</option>
+                                    <option value="San Javier">San Javier</option>
+                                    <option value="INV Estancia">INV Estancia</option>
+                                    <option value="Vegamex">Vegamex</option>
+                                </optgroup>
+                                <!-- Zona Norte -->
+                                <optgroup label="Zona Norte">
+                                    <option value="Mina 2">Mina 2</option>
+                                    <option value="Altamira">Altamira</option>
+                                    <option value="Bella Vista">Bella Vista</option>
+                                    <option value="Purísima">Purísima</option>
+                                </optgroup>
+                                <!-- Transporte -->
+                                <optgroup label="Transporte">
+                                    <option value="Plataformas GAB">Mov. Plataformas GAB</option>
+                                    <option value="Cajas Espinaca GAB">Mov. Cajas con Espinaca GAB</option>
+                                    <option value="Camiones Pato">Mov. Camiones (Pato)</option>
+                                    <option value="Plataforma Externos Mina">Plataforma Externos (Mina)</option>
+                                    <option value="Termos Externos Mina">Termos Externos (Mina)</option>
+                                    <option value="Camiones Mina">Mov. Camiones (Mina)</option>
+                                </optgroup>
+                                <!-- Zona Centro -->
+                                <optgroup label="Zona Centro">
+                                    <option value="Covemex">Covemex</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div class="inventory-grid">
+                            <div class="form-group">
+                                <label>Cajones Armables</label>
+                                <input type="number" id="cajones-armables" min="0" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Cajones Armables Rotos</label>
+                                <input type="number" id="cajones-rotos" min="0" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Cajones Azules</label>
+                                <input type="number" id="cajones-azules" min="0" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Cajones Blancos</label>
+                                <input type="number" id="cajones-blancos" min="0" value="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Notas / Observaciones</label>
+                            <textarea id="notas" rows="3" placeholder="Ej: tabla 2, cultivo repollo, etc."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">💾 Guardar Inventario</button>
+                            <button type="button" onclick="clearForm()" class="btn-secondary">🔄 Limpiar</button>
+                        </div>
+                    </form>
+
+                    <!-- Recent entries -->
+                    <div class="recent-entries">
+                        <h3>Registros de Hoy</h3>
+                        <div id="today-entries"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content">
+                <div class="dashboard-container">
+                    <h2>Dashboard - Resumen General</h2>
+                    
+                    <div class="date-filter">
+                        <label>Ver fecha:</label>
+                        <input type="date" id="dashboard-date" onchange="updateDashboard()">
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Total Cajones Armables</h3>
+                            <div class="stat-value" id="total-armables">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Cajones Rotos</h3>
+                            <div class="stat-value danger" id="total-rotos">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Ubicaciones Reportadas</h3>
+                            <div class="stat-value" id="total-locations">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Cajones Blancos</h3>
+                            <div class="stat-value" id="total-blancos">0</div>
+                        </div>
+                    </div>
+
+                    <div class="zone-breakdown">
+                        <h3>Desglose por Zona</h3>
+                        <div id="zone-summary"></div>
+                    </div>
+
+                    <div class="detailed-table">
+                        <h3>Detalle Completo</h3>
+                        <div id="detailed-inventory"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Tab -->
+            <div id="history-tab" class="tab-content">
+                <div class="history-container">
+                    <h2>Historial de Inventarios</h2>
+                    
+                    <div class="history-filters">
+                        <div class="form-group">
+                            <label>Desde:</label>
+                            <input type="date" id="history-from">
+                        </div>
+                        <div class="form-group">
+                            <label>Hasta:</label>
+                            <input type="date" id="history-to">
+                        </div>
+                        <div class="form-group">
+                            <label>Ubicación:</label>
+                            <select id="history-location">
+                                <option value="">Todas</option>
+                            </select>
+                        </div>
+                        <button onclick="filterHistory()" class="btn-primary">Filtrar</button>
+                    </div>
+
+                    <div id="history-results"></div>
+                </div>
+            </div>
+
+            <!-- Export Tab -->
+            <div id="export-tab" class="tab-content">
+                <div class="export-container">
+                    <h2>Exportar Datos</h2>
+                    
+                    <div class="export-options">
+                        <div class="export-card">
+                            <h3>📊 Exportar a Excel</h3>
+                            <p>Descarga el inventario en formato Excel (.xlsx)</p>
+                            <div class="form-group">
+                                <label>Fecha:</label>
+                                <input type="date" id="export-date">
+                            </div>
+                            <button onclick="exportToExcel()" class="btn-primary">Descargar Excel</button>
+                        </div>
+                        
+                        <div class="export-card">
+                            <h3>📄 Exportar a CSV</h3>
+                            <p>Descarga los datos en formato CSV para análisis</p>
+                            <button onclick="exportToCSV()" class="btn-primary">Descargar CSV</button>
+                        </div>
+                        
+                        <div class="export-card">
+                            <h3>🖨️ Imprimir Reporte</h3>
+                            <p>Genera un reporte imprimible del inventario</p>
+                            <button onclick="printReport()" class="btn-primary">Imprimir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
