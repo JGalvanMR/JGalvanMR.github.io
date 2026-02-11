@@ -1,0 +1,54 @@
+# ----------------------------
+# Configuración general del sitio
+# ----------------------------
+title: Sistema de Inventario de Cajones - GAB
+description: Documentación oficial del sistema web para captura y dashboard de inventario de cajones armables (GAB)
+baseurl: ""   # Para JGalvanMR.github.io se deja vacío
+url: "https://jgalvanmr.github.io"
+
+# ----------------------------
+# Tema (Just the Docs - ideal para documentación)
+# ----------------------------
+remote_theme: just-the-docs/just-the-docs
+
+# ----------------------------
+# Idioma y zona horaria
+# ----------------------------
+lang: es-MX
+timezone: America/Mexico_City
+
+# ----------------------------
+# Opciones del tema
+# ----------------------------
+just_the_docs:
+  search_enabled: true
+  nav_sort: case_sensitive
+  back_to_top: true
+  back_to_top_text: "⬆ Volver arriba"
+
+# ----------------------------
+# Colecciones para documentación
+# ----------------------------
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: docs
+    values:
+      layout: default
+
+# ----------------------------
+# Plugins soportados por GitHub Pages
+# ----------------------------
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# ----------------------------
+# Autor
+# ----------------------------
+author: GAB - Sistemas
